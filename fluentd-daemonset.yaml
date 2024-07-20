@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+  namespace: logging
+data:
+  fluent.conf: |
+    <source>
+      @type tail
+      path /var/log/containers/*.log
+      pos_file /var/log/fluentd-containers.log.pos
+      tag kubernetes.*
+      format json
+      read_from_head true
+      <parse>
+        @type json
+      </parse>
+    </source>
+    <match kubernetes.**>
+      @type elasticsearch
+      host elasticsearch.logging.svc.cluster.local
+      port 9200
+      logstash_format true
+      logstash_prefix kubernetes
+    </match>
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd
+  namespace: logging
+spec:
+  selector:
+    matchLabels:
+      app: fluentd
+  template:
+    metadata:
+      labels:
+        app: fluentd
+    spec:
+      containers:
+      - name: fluentd
+        image: fluent/fluentd:v1.11-1
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: fluentd-config
+          mountPath: /fluentd/etc
+          subPath: fluent.conf
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: fluentd-config
+        configMap:
+          name: fluentd-config

@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmqworker-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rabbitmqworker
+  template:
+    metadata:
+      labels:
+        app: rabbitmqworker
+    spec:
+      containers:
+      - name: rabbitmqworker
+        image: your-docker-repo/rabbitmqworker:latest

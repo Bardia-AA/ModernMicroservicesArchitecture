@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identityserver-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identityserver
+  template:
+    metadata:
+      labels:
+        app: identityserver
+    spec:
+      containers:
+      - name: identityserver
+        image: identityserver:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identityserver-service
+  namespace: default
+spec:
+  selector:
+    app: identityserver
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

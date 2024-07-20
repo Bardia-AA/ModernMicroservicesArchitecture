@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpcservice-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: grpcservice
+  template:
+    metadata:
+      labels:
+        app: grpcservice
+    spec:
+      containers:
+      - name: grpcservice
+        image: your-docker-repo/grpcservice:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpcservice
+spec:
+  selector:
+    app: grpcservice
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

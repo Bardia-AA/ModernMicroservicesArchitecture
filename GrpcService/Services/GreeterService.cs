@@ -1,55 +1,60 @@
 using Grpc.Core;
 using GrpcService.Data;
+using GrpcService.Handlers;
 using GrpcService.Hubs;
 using Microsoft.AspNetCore.SignalR;
-using Shared.DTOs;
+using Microsoft.FeatureManagement;
+using Shared.Events;
 using Shared.Protos;
-using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace GrpcService.Services
 {
     public class GreeterService : Greeter.GreeterBase
     {
-        private readonly GrpcServiceContext _context;
-        private readonly RabbitMqService _rabbitMqService;
+        private readonly CreateExampleCommandHandler _createExampleCommandHandler;
         private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly IFeatureManager _featureManager;
 
-        public GreeterService(GrpcServiceContext context, RabbitMqService rabbitMqService, IHubContext<NotificationHub> hubContext)
+        public GreeterService(CreateExampleCommandHandler createExampleCommandHandler, IHubContext<NotificationHub> hubContext, IFeatureManager featureManager)
         {
-            _context = context;
-            _rabbitMqService = rabbitMqService;
+            _createExampleCommandHandler = createExampleCommandHandler;
             _hubContext = hubContext;
+            _featureManager = featureManager;
         }
 
         public override async Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
         {
-            // Create a DTO object
-            var dto = new ExampleDto
+            // Check if the new feature is enabled
+            if (await _featureManager.IsEnabledAsync("NewFeature"))
             {
-                Id = Guid.NewGuid().ToString(),
-                Name = request.Name
-            };
+                // Handle the command
+                await _createExampleCommandHandler.Handle(request.Name);
 
-            // Add to database
-            _context.ExampleDtos.Add(dto);
-            await _context.SaveChangesAsync();
+                // Notify clients through SignalR
+                var exampleCreatedEvent = new ExampleCreatedEvent
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = request.Name,
+                    CreatedAt = DateTime.UtcNow
+                };
 
-            // Serialize the DTO to JSON and publish it to RabbitMQ
-            var jsonMessage = JsonSerializer.Serialize(dto);
-            _rabbitMqService.PublishMessage(jsonMessage);
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", exampleCreatedEvent);
 
-            // For demonstration purposes, consume the message immediately
-            var message = _rabbitMqService.ConsumeMessage();
-            var consumedDto = JsonSerializer.Deserialize<ExampleDto>(message);
-
-            // Notify clients through SignalR
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", consumedDto);
-
-            // Return a HelloReply message
-            return new HelloReply
+                // Return a HelloReply message
+                return new HelloReply
+                {
+                    Message = "Hello " + request.Name
+                };
+            }
+            else
             {
-                Message = "Hello " + consumedDto.Name
-            };
+                // Return a different message if the feature is disabled
+                return new HelloReply
+                {
+                    Message = "Hello " + request.Name + ", but the new feature is not enabled."
+                };
+            }
         }
     }
 }

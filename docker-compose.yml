@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  grpcservice:
+    build:
+      context: .
+      dockerfile: GrpcService/Dockerfile
+    ports:
+      - "5001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  authservice:
+    build:
+      context: .
+      dockerfile: AuthService/Dockerfile
+    ports:
+      - "5002:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  apigateway:
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  rabbitmqworker:
+    build:
+      context: .
+      dockerfile: RabbitMqWorker/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"

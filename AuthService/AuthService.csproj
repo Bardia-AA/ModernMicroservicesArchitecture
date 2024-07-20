@@ -7,10 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
-		<PackageReference Include="HotChocolate.AspNetCore" Version="13.0.0" />
-		<PackageReference Include="HotChocolate.Data" Version="13.0.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+		<PackageReference Include="HotChocolate.AspNetCore" Version="13.9.7" />
+		<PackageReference Include="HotChocolate.Data" Version="13.9.7" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 	</ItemGroup>
 
 </Project>
