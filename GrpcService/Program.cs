@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Microsoft.FeatureManagement;
 using Microsoft.FeatureManagement.FeatureFilters;
-using System.Text;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using GrpcService.Services.Handlers;
 
@@ -44,7 +43,7 @@ builder.Services.AddSwaggerGen(c =>
             .GetCustomAttributes(true)
             .OfType<ApiVersionAttribute>()
             .SelectMany(attr => attr.Versions);
-        return versions.Any(v => $"v{v.ToString()}" == version);
+        return versions.Any(v => $"v{v}" == version);
     });
 });
 

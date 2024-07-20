@@ -2,7 +2,5 @@
 
 namespace GrpcService.Hubs
 {
-    public class NotificationHub : Hub
-    {
-    }
+    public class NotificationHub : Hub { }
 }

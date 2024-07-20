@@ -7,16 +7,10 @@ using System.Text.Json;
 
 namespace RabbitMqWorker
 {
-    public class Worker : BackgroundService
+    public class Worker(ILogger<Worker> logger, RabbitMqService rabbitMqService) : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
-        private readonly RabbitMqService _rabbitMqService;
-
-        public Worker(ILogger<Worker> logger, RabbitMqService rabbitMqService)
-        {
-            _logger = logger;
-            _rabbitMqService = rabbitMqService;
-        }
+        private readonly ILogger<Worker> _logger = logger;
+        private readonly RabbitMqService _rabbitMqService = rabbitMqService;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

@@ -1,24 +1,21 @@
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddIdentityServer()
-    .AddInMemoryIdentityResources(new List<IdentityResource>
-    {
+    .AddInMemoryIdentityResources(
+    [
         new IdentityResources.OpenId(),
         new IdentityResources.Profile(),
-    })
-    .AddInMemoryApiScopes(new List<ApiScope>
-    {
+    ])
+    .AddInMemoryApiScopes(
+    [
         new ApiScope("grpcservice", "gRPC Service")
-    })
-    .AddInMemoryClients(new List<Client>
-    {
+    ])
+    .AddInMemoryClients(
+    [
         new Client
         {
             ClientId = "client",
@@ -29,9 +26,9 @@ builder.Services.AddIdentityServer()
             },
             AllowedScopes = { "grpcservice" }
         }
-    })
-    .AddTestUsers(new List<TestUser>
-    {
+    ])
+    .AddTestUsers(
+    [
         new TestUser
         {
             SubjectId = "1",
@@ -44,7 +41,7 @@ builder.Services.AddIdentityServer()
             Username = "bob",
             Password = "password"
         }
-    })
+    ])
     .AddDeveloperSigningCredential();
 
 var app = builder.Build();

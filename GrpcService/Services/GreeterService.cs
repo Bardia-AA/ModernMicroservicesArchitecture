@@ -10,18 +10,11 @@ using System.Threading.Tasks;
 
 namespace GrpcService.Services
 {
-    public class GreeterService : Greeter.GreeterBase
+    public class GreeterService(CreateExampleCommandHandler createExampleCommandHandler, IHubContext<NotificationHub> hubContext, IFeatureManager featureManager) : Greeter.GreeterBase
     {
-        private readonly CreateExampleCommandHandler _createExampleCommandHandler;
-        private readonly IHubContext<NotificationHub> _hubContext;
-        private readonly IFeatureManager _featureManager;
-
-        public GreeterService(CreateExampleCommandHandler createExampleCommandHandler, IHubContext<NotificationHub> hubContext, IFeatureManager featureManager)
-        {
-            _createExampleCommandHandler = createExampleCommandHandler;
-            _hubContext = hubContext;
-            _featureManager = featureManager;
-        }
+        private readonly CreateExampleCommandHandler _createExampleCommandHandler = createExampleCommandHandler;
+        private readonly IHubContext<NotificationHub> _hubContext = hubContext;
+        private readonly IFeatureManager _featureManager = featureManager;
 
         public override async Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
         {

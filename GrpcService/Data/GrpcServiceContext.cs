@@ -3,10 +3,8 @@ using Shared.DTOs;
 
 namespace GrpcService.Data
 {
-    public class GrpcServiceContext : DbContext
+    public class GrpcServiceContext(DbContextOptions<GrpcServiceContext> options) : DbContext(options)
     {
-        public GrpcServiceContext(DbContextOptions<GrpcServiceContext> options) : base(options) { }
-
         public DbSet<ExampleDto> ExampleDtos { get; set; }
     }
 }

@@ -5,18 +5,11 @@ using System.Text.Json;
 
 namespace GrpcService.Services.Handlers
 {
-    public class CreateExampleCommandHandler
+    public class CreateExampleCommandHandler(GrpcServiceContext sqlContext, MongoDbContext mongoContext, RabbitMqService rabbitMqService)
     {
-        private readonly GrpcServiceContext _sqlContext;
-        private readonly MongoDbContext _mongoContext;
-        private readonly RabbitMqService _rabbitMqService;
-
-        public CreateExampleCommandHandler(GrpcServiceContext sqlContext, MongoDbContext mongoContext, RabbitMqService rabbitMqService)
-        {
-            _sqlContext = sqlContext;
-            _mongoContext = mongoContext;
-            _rabbitMqService = rabbitMqService;
-        }
+        private readonly GrpcServiceContext _sqlContext = sqlContext;
+        private readonly MongoDbContext _mongoContext = mongoContext;
+        private readonly RabbitMqService _rabbitMqService = rabbitMqService;
 
         public async Task Handle(string name)
         {

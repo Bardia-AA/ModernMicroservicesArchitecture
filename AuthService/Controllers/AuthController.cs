@@ -1,11 +1,9 @@
 using AuthService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AuthService.Controllers
 {
@@ -16,22 +14,28 @@ namespace AuthService.Controllers
         [HttpPost("token")]
         public async Task<IActionResult> GenerateToken([FromBody] LoginRequest request)
         {
+            // Simulate asynchronous operation
+            await Task.Yield();
+
             if (request.Username == "test" && request.Password == "password")
             {
-                var token = GenerateJwtToken(request.Username);
+                var token = await GenerateJwtTokenAsync(request.Username);
                 return Ok(new { Token = token });
             }
 
             return Unauthorized();
         }
 
-        private string GenerateJwtToken(string username)
+        private static async Task<string> GenerateJwtTokenAsync(string username)
         {
+            // Simulate asynchronous operation
+            await Task.Yield();
+
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
+            new Claim(JwtRegisteredClaimNames.Sub, username),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_secret_key_here"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
