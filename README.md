@@ -6,6 +6,50 @@ This project demonstrates a comprehensive microservices architecture using vario
 
 ## Solution Structure
 
+```plaintext
+ModernMicroservicesArchitecture
+├── ApiGateway
+│   ├── Program.cs
+│   └── ocelot.json
+├── AuthService
+│   ├── Controllers
+│   │   └── AuthController.cs
+│   ├── GraphQL
+│   │   ├── Query.cs
+│   │   └── UserType.cs
+│   ├── Models
+│   │   └── LoginRequest.cs
+│   └── Program.cs
+├── GrpcService
+│   ├── Controllers
+│   │   └── ExampleController.cs
+│   ├── Hubs
+│   │   └── NotificationHub.cs
+│   ├── Services
+│   │   ├── GreeterService.cs
+│   │   ├── Handlers
+│   │   │   └── CreateExampleCommandHandler.cs
+│   │   └── RabbitMqService.cs
+│   ├── Protos
+│   │   └── greet.proto
+│   ├── Data
+│   │   ├── GrpcServiceContext.cs
+│   │   └── MongoDbContext.cs
+│   └── Program.cs
+├── RabbitMqWorker
+│   ├── Worker.cs
+│   ├── Services
+│   │   └── RabbitMqService.cs
+│   └── Program.cs
+├── Shared
+│   ├── DTOs
+│   │   └── ExampleDto.cs
+│   └── Events
+│       └── ExampleCreatedEvent.cs
+└── IdentityServer
+    ├── Config.cs
+    └── Program.cs
+
 ### Projects
 
 1. **ApiGateway**
@@ -26,6 +70,7 @@ This project demonstrates a comprehensive microservices architecture using vario
 3. **GrpcService**
    - **Purpose**: Provides gRPC services and integrates RabbitMQ for messaging, SignalR for real-time notifications, and supports MongoDB and SQL Server for database operations.
    - **Key Files**:
+     - `Controllers/ExampleController.cs`: API versioned controller to demonstrate versioning.
      - `Hubs/NotificationHub.cs`: Manages SignalR connections and methods.
      - `Services/GreeterService.cs`: Implements gRPC service logic.
      - `Handlers/CreateExampleCommandHandler.cs`: Handles creation commands for event sourcing.
