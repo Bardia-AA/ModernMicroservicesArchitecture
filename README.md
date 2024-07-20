@@ -68,7 +68,7 @@ This project demonstrates a comprehensive microservices architecture using vario
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/ModernMicroservicesArchitecture.git
+   git clone https://github.com/Bardia-AA/ModernMicroservicesArchitecture.git
    cd ModernMicroservicesArchitecture
    ```
 
