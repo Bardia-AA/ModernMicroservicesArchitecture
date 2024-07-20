@@ -1,6 +1,6 @@
 ﻿using RabbitMQ.Client;
 
-namespace RabbitMqWorker
+namespace RabbitMqWorker.Services
 {
     public class RabbitMqService
     {

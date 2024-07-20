@@ -24,7 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{38DD6EEF-434
 		authservice-deployment.yml = authservice-deployment.yml
 		grpcservice-deployment.yml = grpcservice-deployment.yml
 		identityserver-deployment.yml = identityserver-deployment.yml
-		istio-ingressgateway.yml = istio-ingressgateway.yml
 		rabbitmq-deployment.yml = rabbitmq-deployment.yml
 		rabbitmqworker-deployment.yml = rabbitmqworker-deployment.yml
 	EndProjectSection
@@ -45,6 +44,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "consul", "consul", "{439D87
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{5A245571-C36B-41D4-9710-3B243958262B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "istio", "istio", "{E7232DF9-F1BF-423E-9B1D-BC36CAAB1252}"
+	ProjectSection(SolutionItems) = preProject
+		istio-ingressgateway.yml = istio-ingressgateway.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +88,7 @@ Global
 		{66E875A8-B89F-4581-A1B7-758266A04A4A} = {38DD6EEF-4349-4C0E-A770-2B25CE5D1A5C}
 		{4F25757C-7647-4F73-9E4E-A8DB0E5ED738} = {38DD6EEF-4349-4C0E-A770-2B25CE5D1A5C}
 		{439D8715-665C-4E74-BEC4-78D117175C09} = {38DD6EEF-4349-4C0E-A770-2B25CE5D1A5C}
+		{E7232DF9-F1BF-423E-9B1D-BC36CAAB1252} = {38DD6EEF-4349-4C0E-A770-2B25CE5D1A5C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A89B1BBF-49A5-4681-B078-DC8464F28C1A}

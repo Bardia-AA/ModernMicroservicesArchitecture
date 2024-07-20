@@ -1,10 +1,9 @@
 ﻿using GrpcService.Data;
-using GrpcService.Services;
 using Shared.DTOs;
 using Shared.Events;
 using System.Text.Json;
 
-namespace GrpcService.Handlers
+namespace GrpcService.Services.Handlers
 {
     public class CreateExampleCommandHandler
     {

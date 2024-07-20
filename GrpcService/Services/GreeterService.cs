@@ -1,7 +1,7 @@
 using Grpc.Core;
 using GrpcService.Data;
-using GrpcService.Handlers;
 using GrpcService.Hubs;
+using GrpcService.Services.Handlers;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.FeatureManagement;
 using Shared.Events;

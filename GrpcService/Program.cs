@@ -1,6 +1,5 @@
 using Consul;
 using GrpcService.Data;
-using GrpcService.Handlers;
 using GrpcService.Hubs;
 using GrpcService.Services;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +11,7 @@ using Microsoft.FeatureManagement;
 using Microsoft.FeatureManagement.FeatureFilters;
 using System.Text;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using GrpcService.Services.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
