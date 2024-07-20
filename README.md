@@ -49,6 +49,7 @@ ModernMicroservicesArchitecture
 └── IdentityServer
     ├── Config.cs
     └── Program.cs
+```
 
 ### Projects
 
